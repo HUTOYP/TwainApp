@@ -1,0 +1,288 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\TWainApp.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\TWainApp.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 TWainApp"
+FONT 9, "宋体"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,21,21
+    LTEXT           "TWainApp 1.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "版权所有 (C) 2015",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_TWAINAPP_DIALOG DIALOGEX 0, 0, 714, 576
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "扫描助手"
+FONT 9, "宋体"
+BEGIN
+    LTEXT           "扫描仪型号：",IDC_STATIC,7,9,49,8
+    EDITTEXT        IDC_EDIT_SOURCE,60,7,576,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "选  择",IDC_BUTTON_SELECT,643,7,64,14
+    GROUPBOX        "扫描仪选项",IDC_STATIC,7,26,160,513
+    CONTROL         "使用扫描仪自带软件进行扫描作业",IDC_CHECK_SHOW,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,128,136,10
+    LTEXT           "页面：",IDC_STATIC,16,49,25,8
+    COMBOBOX        IDC_COMBO_PAGE,62,47,95,52,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "旋转角度：",IDC_STATIC,16,154,41,8,NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT_ROTATION,62,151,82,14,ES_AUTOHSCROLL | NOT 
+                    WS_VISIBLE
+    CONTROL         "Spin1",IDC_SPIN_ROTATION,"msctls_updown32",
+                    UDS_AUTOBUDDY | UDS_ARROWKEYS | NOT WS_VISIBLE,143,151,
+                    13,14
+    LTEXT           "色彩模式：",IDC_STATIC,16,76,41,8
+    COMBOBOX        IDC_COMBO_COLOR,62,74,95,56,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "分辨率：",IDC_STATIC,16,104,33,8
+    PUSHBUTTON      "扫  描",IDC_BUTTON_SCAN,13,455,147,30
+    PUSHBUTTON      "插  扫",IDC_BUTTON_INSCAN,13,501,147,30
+    PUSHBUTTON      "取  消",IDC_BUTTON_CANCLE,13,383,147,30,NOT WS_VISIBLE
+    PUSHBUTTON      "上传并关闭",IDC_BUTTON_SAVE,436,546,130,23
+    GROUPBOX        "扫描预览",IDC_STATIC,172,26,535,513
+    EDITTEXT        IDC_EDIT_RESOLUTION,62,101,80,14,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    LTEXT           "DPI",IDC_STATIC,145,104,13,8
+    CONTROL         "",IDC_STATIC_IMAGE,"Static",SS_BITMAP | SS_CENTERIMAGE | 
+                    SS_RIGHTJUST | WS_BORDER,180,61,519,367
+    CONTROL         "List1",IDC_LIST_IMAGE,"SysListView32",LVS_SINGLESEL | 
+                    LVS_SHOWSELALWAYS | LVS_AUTOARRANGE | LVS_ALIGNLEFT | 
+                    WS_BORDER | WS_TABSTOP,180,435,519,96
+    PUSHBUTTON      "",IDC_BUTTON_LEFT90,250,37,20,20,BS_BITMAP
+    PUSHBUTTON      "",IDC_BUTTON_RIGHT90,272,37,20,20,BS_BITMAP
+    PUSHBUTTON      "",IDC_BUTTON_MOVEUP,179,37,20,20,BS_BITMAP | BS_CENTER | 
+                    BS_VCENTER
+    PUSHBUTTON      "",IDC_BUTTON_MOVEDOWN,201,37,20,20,BS_BITMAP
+    PUSHBUTTON      "",IDC_BUTTON_DELETE,223,37,20,20,BS_BITMAP
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,246,37,1,20
+    PUSHBUTTON      "",IDC_BUTTON_QHB,299,37,20,20,BS_BITMAP
+    PUSHBUTTON      "",IDC_BUTTON_JP,321,37,20,20,BS_BITMAP
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,295,37,1,20
+    PUSHBUTTON      "",IDC_BUTTON_QB,343,37,20,20,BS_BITMAP
+    PUSHBUTTON      "放弃并关闭",IDC_BUTTON_CLOSE,577,546,130,23
+END
+
+IDD_DIALOG_XZ DIALOG DISCARDABLE  0, 0, 198, 64
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "图像偏转调整对话框"
+FONT 10, "System"
+BEGIN
+    CONTROL         "Slider1",IDC_SLIDER,"msctls_trackbar32",TBS_AUTOTICKS,7,
+                    17,184,15
+    LTEXT           "逆时针",IDC_STATIC,7,7,25,8
+    LTEXT           "顺时针",IDC_STATIC,166,7,25,8
+    LTEXT           "-30",IDC_STATIC,8,35,11,8
+    RTEXT           "30",IDC_STATIC,180,35,9,8
+    CTEXT           "0",IDC_STATIC,95,35,8,8
+    LTEXT           "当前旋转值：",IDC_STATIC,7,49,49,8
+    LTEXT           "Static",IDC_STATIC_VALUE,56,49,35,8
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "TWainApp Microsoft 基础类应用程序\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "TWainApp\0"
+            VALUE "LegalCopyright", "版权所有 (C) 2015\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "TWainApp.EXE\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "TWainApp 应用程序\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_TWAINAPP_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 707
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 569
+    END
+
+    IDD_DIALOG_XZ, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 191
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 57
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_BITMAP_RIGHT        BITMAP  DISCARDABLE     "res\\LEFT.bmp"
+IDB_BITMAP_LEFT         BITMAP  DISCARDABLE     "res\\RIGHT.bmp"
+IDB_BITMAP_DELETE       BITMAP  DISCARDABLE     "res\\DELETE.bmp"
+IDB_BITMAP_MOVEDOWN     BITMAP  DISCARDABLE     "res\\MOVEDOWN.bmp"
+IDB_BITMAP_MOVEUP       BITMAP  DISCARDABLE     "res\\MOVEUP.bmp"
+IDB_BITMAP_QHB          BITMAP  DISCARDABLE     "res\\QHB.bmp"
+IDB_BITMAP_JP           BITMAP  DISCARDABLE     "res\\JP.bmp"
+IDB_BITMAP_QB           BITMAP  DISCARDABLE     "res\\QB.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "关于 TWainApp(&A)..."
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\TWainApp.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
