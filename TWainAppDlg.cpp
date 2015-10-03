@@ -880,28 +880,14 @@ void CTWainAppDlg::OnButtonSave()
 	}
 
 	// PDF文件上传
-	// WinExec、ShellExecute、CreateProcess
-	// Example : "httpUpload http://192.168.18.7:8080/BJXT/fileupload 3 zbxlh 123 ssmk bjxt yh hujq 1 scanfile.pdf C:\\image.pdf";
-	CString strPara = "";
-	strPara.Format("httpUpload %s %d tempfile %s 1 scanfile.pdf .\\temp\\image.pdf", 
-		m_map_cmdline["URL"], 1, m_map_cmdline["TEMPFILE"]);
+	// ......
+	
+	// ::DeleteFile("C:\\image.pdf");
 
-	CTWainHelper::LogMessage("文件上传命令行：");
-	CTWainHelper::LogMessage((char*)(LPCTSTR)strPara);
-	CTWainHelper::LogMessage("\r\n");
+	// 清空图片缓存队列
 
-	if(CTWainHelper::Upload((LPCTSTR)strPara) != 0)
-	{
-		MessageBox("上传扫描文件失败！", MESSAGEBOX_TITLE_INFO);
-		return;
-	}
-
-	//::DeleteFile("C:\\image.pdf");
-
-	//清空图片缓存队列
-
-	//直接调用clear函数并不清空内存
-	//m_pic_handles.clear();
+	// 直接调用clear函数并不清空内存
+	// m_pic_handles.clear();
 
 	int size = m_pic_handles.size();
 	
@@ -925,7 +911,7 @@ void CTWainAppDlg::OnButtonSave()
 	m_static_image.GetDC()->FillSolidRect(lRect.left, lRect.top, lRect.Width(), lRect.Height(), RGB(255,255,255));
 	///////////////////////////////////////////////////////////////////////////
 
-	MessageBox("文件上传成功！", MESSAGEBOX_TITLE_INFO);
+	MessageBox("文件保存成功！", MESSAGEBOX_TITLE_INFO);
 
 	CDialog::OnOK();
 }
