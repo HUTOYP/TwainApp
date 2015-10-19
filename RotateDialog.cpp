@@ -66,17 +66,7 @@ BOOL CRotateDialog::OnInitDialog()
 void CRotateDialog::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 
 {
 	// TODO: Add your message handler code here and/or call default
-	
 	CDialog::OnHScroll(nSBCode, nPos, pScrollBar);
-/*
-	int nCurrentSliderValue = m_slider.GetPos();
-	CString strCurrentSliderValue = "";
-	strCurrentSliderValue.Format("%d", nCurrentSliderValue);
-
-	m_value.SetWindowText(strCurrentSliderValue);
-
-	parentDlg->RotatePicture(m_nSelectedIndex, nCurrentSliderValue);
-*/
 }
 
 void CRotateDialog::OnReleasedcaptureSlider(NMHDR* pNMHDR, LRESULT* pResult) 
@@ -99,6 +89,5 @@ void CRotateDialog::OnClose()
 	// TODO: Add your message handler code here and/or call default
 	
 	parentDlg->IsSaveRotate(m_nSelectedIndex, m_cxSelectedImage);
-
 	CDialog::OnClose();
 }

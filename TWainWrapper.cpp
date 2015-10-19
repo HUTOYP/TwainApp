@@ -443,6 +443,7 @@ void CTWainWrapper::DoMemTransfer()
 
 void CTWainWrapper::DoFileTransfer()
 {
+	//文件模式适用于大图片，数量较多的情况
 }
 
 void CTWainWrapper::DoNativeTransfer()

@@ -196,18 +196,6 @@ BOOL CTWainHelper::SaveAsPdf(const char* pFileName, std::vector< HANDLE > m_pic_
 
 			char* imagedata = NULL;
 			DWORD size = 0;
-/*			if(!CTWainHelper::SaveBMP((HGLOBAL)(*it), &imagedata, &size))
-			{
-				char logInfo[LOGSIZE];
-				sprintf(logInfo, "Error: 生成BMP文件格式数据失败！%s:%d\r\n", __FILE__, __LINE__);
-				CTWainHelper::LogMessage(logInfo);
-
-				if(imagedata)
-					delete imagedata;
-
-				continue;
-			}
-*/
 
 			CFile file(".\\temp\\temp.jpg", CFile::modeRead);
 			size = file.GetLength();

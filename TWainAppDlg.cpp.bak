@@ -234,6 +234,40 @@ BOOL CTWainAppDlg::OnInitDialog()
 	GetModuleFileName(NULL, szFilePath, MAX_PATH);
 	_tcsrchr(szFilePath, _T('\\'))[1] = 0;
 	m_strExePath = szFilePath;
+	
+/*	//////////////////////////////////////////图像处理测试//////////////////////////////////////
+	CString input = m_strExePath + "\\temp\\WHITE_TEMP.bmp";
+	CString output = m_strExePath + "\\temp\\WHITE.bmp";
+
+	string inputPath = input.GetBuffer(0);
+	input.ReleaseBuffer();
+	string outputPath = output.GetBuffer(0);
+	output.ReleaseBuffer();
+
+	BOOL ret = OpenCVImageHandle::cv_isAllWhite(inputPath);
+*/
+/*	CString input = m_strExePath + "\\temp\\QHB_TEMP_TEST.bmp";
+	CString output = m_strExePath + "\\temp\\QHB.bmp";
+
+	string inputPath = input.GetBuffer(0);
+	input.ReleaseBuffer();
+	string outputPath = output.GetBuffer(0);
+	output.ReleaseBuffer();
+	
+	OpenCVImageHandle::cv_RemoveBorder(inputPath, outputPath);
+*/
+/*
+	input = m_strExePath + "\\temp\\JP_TEMP_6.bmp";
+	output = m_strExePath + "\\temp\\JP.bmp";
+	
+	inputPath = input.GetBuffer(0);
+	input.ReleaseBuffer();
+	outputPath = output.GetBuffer(0);
+	output.ReleaseBuffer();
+
+	int retValue = 0;
+ 	OpenCVImageHandle::cv_roteImgSelf(inputPath, outputPath, retValue);
+*/	//////////////////////////////////////////////////////////////////////////////////////////////
 
 	// 初始化TWain
 	if(!m_twainWrapper->InitTwain(m_hWnd))
@@ -517,8 +551,6 @@ void CTWainAppDlg::GetCapability_Resolution()
 
 	TW_CAPABILITY twCapability_x;
 	TW_CAPABILITY twCapability_y;
-
-	// 注意：某些扫描仪获取分辨率的时候使用的是TWON_ENUMERATE，应该先判断能力支持的类型
 
 	if(!m_twainWrapper->GetCapability(twCapability_x, ICAP_XRESOLUTION, TWON_RANGE))
 	{
@@ -879,7 +911,7 @@ void CTWainAppDlg::OnButtonSave()
 	m_static_image.GetDC()->FillSolidRect(lRect.left, lRect.top, lRect.Width(), lRect.Height(), RGB(255,255,255));
 	///////////////////////////////////////////////////////////////////////////
 
-	MessageBox("文件保存成功！", MESSAGEBOX_TITLE_INFO);
+	MessageBox("文件上传成功！", MESSAGEBOX_TITLE_INFO);
 
 	CDialog::OnOK();
 }
@@ -905,6 +937,8 @@ void CTWainAppDlg::OnButtonClose()
 	m_static_image.SetBitmap(NULL);
 
 	m_twainWrapper->CloseDSM();
+
+//	_CrtDumpMemoryLeaks();
 
 	CDialog::OnCancel();
 }
@@ -1226,6 +1260,32 @@ void CTWainAppDlg::OnUpdateEditRotation()
 	}
 }
 
+// void CTWainAppDlg::GetProportionSize(int nSrcWidth, int nSrcHeight, int nMaxWidth, int nMaxHeight, int* nNewWidth, int* nNewHeight)
+// {
+// 	int w = nSrcWidth;
+// 	int h = nSrcHeight;
+// 	
+// 	if(w > nMaxWidth)
+// 	{
+// 		*nNewWidth = nMaxWidth;
+// 		*nNewHeight = h * nMaxWidth / w;
+// 	}
+// 	else
+// 	{
+// 		*nNewWidth = w;
+// 		*nNewHeight = h;
+// 	}
+// 	
+// 	w = *nNewWidth;
+// 	h = *nNewHeight;
+// 	
+// 	if(h > nMaxHeight)
+// 	{
+// 		*nNewWidth = w * nMaxHeight / h;
+// 		*nNewHeight = nMaxHeight;
+// 	}
+// }
+
 void CTWainAppDlg::OnItemchangedListImage(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
@@ -1252,6 +1312,23 @@ void CTWainAppDlg::OnItemchangedListImage(NMHDR* pNMHDR, LRESULT* pResult)
 	m_static_image.GetDC()->FillSolidRect(lRect.left, lRect.top, lRect.Width(), lRect.Height(), RGB(255,255,255));
 
 	HANDLE image = m_pic_handles[nSelectedIndex];
+
+	/*
+	CxImage cxImage;
+	cxImage.CreateFromHANDLE(image);
+
+	int height = cxImage.GetHeight();
+	int width = cxImage.GetWidth();
+
+	int nNewWidth;
+	int nNewHeight;
+	GetProportionSize(width, height, lRect.Width(), lRect.Height(), &nNewWidth, &nNewHeight);
+	
+	cxImage.Resample(nNewWidth, nNewHeight);
+
+	HBITMAP bmp = cxImage.MakeBitmap(m_static_image.GetDC()->m_hDC);
+	m_static_image.SetBitmap(bmp);
+	*/
 
 	CxImage cxImage;
 	cxImage.CreateFromHANDLE(image);
@@ -1655,11 +1732,86 @@ void CTWainAppDlg::OnButtonJp()
 		return;
 	}
 
+//	HANDLE image = m_pic_handles[nSelectedIndex];
+
 	m_previous_rotatevalue = 0;
 
 	CRotateDialog rotateDialog(this);
 	rotateDialog.SetSelectedIndex(nSelectedIndex);
 	rotateDialog.DoModal();
+
+/*	自动纠偏
+
+	CxImage cxImage;
+	cxImage.CreateFromHANDLE(image);
+
+	//临时文件
+	CString input = m_strExePath + "\\temp\\JP_TEMP.bmp";
+	CString output = m_strExePath + "\\temp\\JP.bmp";
+	
+	string inputPath = input.GetBuffer(0);
+	input.ReleaseBuffer();
+	string outputPath = output.GetBuffer(0);
+	output.ReleaseBuffer();
+
+	cxImage.Save(input, CXIMAGE_FORMAT_BMP);
+
+	int retValue = 0;
+	OpenCVImageHandle::cv_roteImgSelf(inputPath, outputPath, retValue);
+
+	if(retValue == -1)
+	{
+		return;
+	}
+
+	m_static_image.SetBitmap(NULL);
+	
+	CRect lRect;
+	m_static_image.GetClientRect(&lRect);
+	m_static_image.GetDC()->FillSolidRect(lRect.left, lRect.top, lRect.Width(), lRect.Height(), RGB(255,255,255));
+
+	CxImage newCxImage;
+	newCxImage.Load(output, CXIMAGE_FORMAT_BMP);
+	
+	image = newCxImage.CopyToHandle();
+	UpdateImageAt(nSelectedIndex, image);
+	
+	/////////////////////////////////////////////////////////////////////////
+	int height = cxImage.GetHeight();
+	int width = cxImage.GetWidth();
+	
+	int nNewWidth;
+	int nNewHeight;
+	GetProportionSize(width, height, lRect.Width(), lRect.Height(), &nNewWidth, &nNewHeight);
+
+// 	int litter = height / lRect.Height();
+// 	int newwidth = width * lRect.Height() / height;
+	
+	cxImage.Resample(nNewWidth, nNewHeight);
+	
+	HBITMAP bmp = cxImage.MakeBitmap(m_static_image.GetDC()->m_hDC);
+	
+	m_static_image.SetBitmap(bmp);
+	
+	if(IDYES != AfxMessageBox("是否应用更改？", MB_YESNO))
+	{
+		UpdateImageAt(nSelectedIndex, image);
+		
+		height = cxImage.GetHeight();
+		width = cxImage.GetWidth();
+		
+		int nNewWidth;
+		int nNewHeight;
+		GetProportionSize(width, height, lRect.Width(), lRect.Height(), &nNewWidth, &nNewHeight);
+
+		cxImage.Resample(nNewWidth, nNewHeight);
+		
+		HBITMAP oldbmp = cxImage.MakeBitmap(m_static_image.GetDC()->m_hDC);
+		m_static_image.SetBitmap(oldbmp);
+	}
+
+	UpdateImageListCtrl();
+*/
 }
 
 void CTWainAppDlg::RotatePicture(int nImageIndex, int nRotateValue)
@@ -1669,6 +1821,12 @@ void CTWainAppDlg::RotatePicture(int nImageIndex, int nRotateValue)
 	// 实际旋转角度
 	int ntempValue = nRotateValue;
 	nRotateValue = nRotateValue - m_previous_rotatevalue;
+
+	// 旋转指定角度
+//	if(m_pTempCxImage == NULL)
+//		m_pTempCxImage = new CxImage();
+//	m_pTempCxImage->CreateFromHANDLE(image);
+//	m_pTempCxImage->Rotate(nRotateValue);
 
 	CxImage TempCxImage;
 	TempCxImage.CreateFromHANDLE(image);
@@ -1683,6 +1841,28 @@ void CTWainAppDlg::RotatePicture(int nImageIndex, int nRotateValue)
 	m_ctrl_imagelist.SetItemState(-1, 0, LVIS_SELECTED);
 	m_ctrl_imagelist.SetItemState(nImageIndex, LVIS_SELECTED, LVIS_SELECTED);
 
+	/////////////////////////////////////////////////////////////////////////
+/*	CRect lRect;
+	m_static_image.GetClientRect(&lRect);
+	m_static_image.GetDC()->FillSolidRect(lRect.left, lRect.top, lRect.Width(), lRect.Height(), RGB(255,255,255));
+
+	int width = m_pTempCxImage->GetWidth();
+	int height = m_pTempCxImage->GetHeight();
+	
+	int nNewWidth;
+	int nNewHeight;
+	GetProportionSize(width, height, lRect.Width(), lRect.Height(), &nNewWidth, &nNewHeight);
+	
+	CxImage tempCxImage(*m_pTempCxImage);
+	tempCxImage.Resample(nNewWidth, nNewHeight);
+	HBITMAP bmp = tempCxImage.MakeBitmap(m_static_image.GetDC()->m_hDC);
+
+	m_static_image.SetBitmap(bmp);
+	if(bmp)
+	{
+		DeleteObject(bmp);
+	}
+*/	
 	UpdateImageListCtrl();
 
 	m_previous_rotatevalue = ntempValue;
@@ -1699,6 +1879,29 @@ void CTWainAppDlg::IsSaveRotate(int nImageIndex, CxImage cxImage)
 		
 		m_ctrl_imagelist.SetItemState(-1, 0, LVIS_SELECTED);
 		m_ctrl_imagelist.SetItemState(nImageIndex, LVIS_SELECTED, LVIS_SELECTED);
+
+		////////////////////////////////////////////////////////////////
+/*		CRect lRect;
+		m_static_image.GetClientRect(&lRect);
+		m_static_image.GetDC()->FillSolidRect(lRect.left, lRect.top, lRect.Width(), lRect.Height(), RGB(255,255,255));
+
+		int height = cxImage.GetHeight();
+		int width = cxImage.GetWidth();
+		
+		int nNewWidth;
+		int nNewHeight;
+		GetProportionSize(width, height, lRect.Width(), lRect.Height(), &nNewWidth, &nNewHeight);
+		
+		cxImage.Resample(nNewWidth, nNewHeight);
+		
+		HBITMAP bmp = cxImage.MakeBitmap(m_static_image.GetDC()->m_hDC);
+		m_static_image.SetBitmap(bmp);
+
+		if(bmp)
+		{
+			DeleteObject(bmp);
+		}
+*/
 	}
 	else
 	{
@@ -1764,6 +1967,28 @@ void CTWainAppDlg::OnButtonQhb()
 	
 	m_ctrl_imagelist.SetItemState(-1, 0, LVIS_SELECTED);
 	m_ctrl_imagelist.SetItemState(nSelectedIndex, LVIS_SELECTED, LVIS_SELECTED);
+
+	/////////////////////////////////////////////////////////////////////////
+	// 缩放图像，从而能够在Picture控件中适当显示出来
+//	int width = newCxImage.GetWidth();
+//	int height = newCxImage.GetHeight();
+	
+//	int nNewWidth;
+//	int nNewHeight;
+//	GetProportionSize(width, height, lRect.Width(), lRect.Height(), &nNewWidth, &nNewHeight);
+	
+	// 创建临时CxImage，用以应用更改后保存图像数据
+	//CxImage tempImage(newCxImage);
+	
+//	newCxImage.Resample(nNewWidth, nNewHeight);
+//	HBITMAP bmp = newCxImage.MakeBitmap(m_static_image.GetDC()->m_hDC);
+	
+//	m_static_image.SetBitmap(bmp);
+	
+//	if(bmp)
+//	{
+//		DeleteObject(bmp);
+//	}
 	
 	// 如果效果不理想，应当放弃更改
 	if(IDYES != AfxMessageBox("是否应用更改？", MB_YESNO))
@@ -1772,6 +1997,23 @@ void CTWainAppDlg::OnButtonQhb()
 		
 		m_ctrl_imagelist.SetItemState(-1, 0, LVIS_SELECTED);
 		m_ctrl_imagelist.SetItemState(nSelectedIndex, LVIS_SELECTED, LVIS_SELECTED);
+
+//		height = cxImage.GetHeight();
+//		width = cxImage.GetWidth();
+		
+//		int nNewWidth;
+//		int nNewHeight;
+//		GetProportionSize(width, height, lRect.Width(), lRect.Height(), &nNewWidth, &nNewHeight);
+		
+//		cxImage.Resample(nNewWidth, nNewHeight);
+		
+//		HBITMAP oldbmp = cxImage.MakeBitmap(m_static_image.GetDC()->m_hDC);
+//		m_static_image.SetBitmap(oldbmp);
+		
+//		if(oldbmp)
+//		{
+//			DeleteObject(bmp);
+//		}
 	}
 	else
 	{

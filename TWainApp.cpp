@@ -48,18 +48,6 @@ BOOL CTWainAppApp::InitInstance()
 	Enable3dControlsStatic();	// Call this when linking to MFC statically
 #endif
 
-	//生成内存泄露报告
-/*	
-	int flag = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
-	flag |= _CRTDBG_LEAK_CHECK_DF;
-	
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_FILE);
-	_CrtSetReportFile(_CRT_WARN, _CRTDBG_FILE_STDOUT);
-	_CrtSetDbgFlag(flag);
-*/
-
-	//支持的命令行名称：
-	//URL, ZBXLH, SSMK, YH
 	CString cszCmd;
 	cszCmd = GetCommandLine();
 
