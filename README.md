@@ -5,7 +5,7 @@ The TwainApp provides text-scanning and pictrue-processing functions, it can
 **Execution Environment**
 windows + visual C++ 6.0
 
-### Depend Libraries:
+**Depend Libraries**
 * CxImage
 * OpenCV
 * GdiPlus
